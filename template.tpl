@@ -13,8 +13,8 @@ ___INFO___
   "id": "cvt_temp_public_id",
   "version": 1,
   "securityGroups": [],
-  "displayName": "Uxify Loader",
-  "categories": ["ANALYTICS", "HEAT_MAP"],
+  "displayName": "Uxify",
+  "categories": ["ANALYTICS", "SESSION_RECORDING"],
   "brand": {
     "id": "brand_dummy",
     "displayName": "",
@@ -47,7 +47,7 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
-const injectScript = require('injectScript'); 
+const injectScript = require('injectScript');
 const queryPermission = require('queryPermission');
 const fail = require('fail');
 const url = "https://businesswebvitals.com/generic/" + data.apikey;
@@ -102,5 +102,3 @@ scenarios: []
 ___NOTES___
 
 Created on 9/3/2024, 12:36:23 PM
-
-
