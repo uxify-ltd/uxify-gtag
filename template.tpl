@@ -14,7 +14,10 @@ ___INFO___
   "version": 1,
   "securityGroups": [],
   "displayName": "Uxify",
-  "categories": ["ANALYTICS", "SESSION_RECORDING"],
+  "categories": [
+    "ANALYTICS",
+    "SESSION_RECORDING"
+  ],
   "brand": {
     "id": "brand_dummy",
     "displayName": "Uxify",
@@ -113,7 +116,6 @@ scenarios:
 
     assertApi('gtmOnSuccess').wasCalled();
     assertApi('gtmOnFailure').wasNotCalled();
-
 - name: Script injection fails gracefully
   code: |-
     const mockData = {
@@ -132,7 +134,6 @@ scenarios:
 
     assertApi('gtmOnFailure').wasCalled();
     assertApi('gtmOnSuccess').wasNotCalled();
-
 - name: Tag fails when inject_script permission is denied
   code: |-
     const mockData = {
