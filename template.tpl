@@ -50,7 +50,7 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 const injectScript = require('injectScript');
 const queryPermission = require('queryPermission');
 const fail = require('fail');
-const url = "https://businesswebvitals.com/generic/" + data.apikey;
+const url = "https://cwv.io/" + data.apikey;
 
 if (queryPermission('inject_script', url)) {
   injectScript(url, data.gtmOnSuccess, data.gtmOnFailure);
@@ -76,7 +76,7 @@ ___WEB_PERMISSIONS___
             "listItem": [
               {
                 "type": 1,
-                "string": "https://*.businesswebvitals.com/generic/*"
+                "string": "https://*.cwv.io/*"
               }
             ]
           }
@@ -105,7 +105,7 @@ scenarios:
     });
 
     mock('injectScript', function(url, onSuccess, onFailure) {
-      assertThat(url).isEqualTo("https://businesswebvitals.com/generic/test-api-key-123");
+      assertThat(url).isEqualTo("https://cwv.io/test-api-key-123");
       onSuccess();
     });
 
