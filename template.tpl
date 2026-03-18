@@ -53,13 +53,10 @@ const fail = require('fail');
 const url = "https://businesswebvitals.com/generic/" + data.apikey;
 
 if (queryPermission('inject_script', url)) {
-  injectScript(url);
+  injectScript(url, data.gtmOnSuccess, data.gtmOnFailure);
 } else {
   fail("Can not load Uxify! Missing inject_script permission for Google Tag Manager.");
 }
-
-// Call data.gtmOnSuccess when the tag is finished.
-data.gtmOnSuccess();
 
 
 ___WEB_PERMISSIONS___
@@ -96,9 +93,64 @@ ___WEB_PERMISSIONS___
 
 ___TESTS___
 
-scenarios: []
+scenarios:
+- name: Script injected successfully with valid API key
+  code: |-
+    const mockData = {
+      apikey: "test-api-key-123"
+    };
+
+    mock('queryPermission', function(permission, url) {
+      return true;
+    });
+
+    mock('injectScript', function(url, onSuccess, onFailure) {
+      assertThat(url).isEqualTo("https://businesswebvitals.com/generic/test-api-key-123");
+      onSuccess();
+    });
+
+    runCode(mockData);
+
+    assertApi('gtmOnSuccess').wasCalled();
+    assertApi('gtmOnFailure').wasNotCalled();
+
+- name: Script injection fails gracefully
+  code: |-
+    const mockData = {
+      apikey: "test-api-key-123"
+    };
+
+    mock('queryPermission', function(permission, url) {
+      return true;
+    });
+
+    mock('injectScript', function(url, onSuccess, onFailure) {
+      onFailure();
+    });
+
+    runCode(mockData);
+
+    assertApi('gtmOnFailure').wasCalled();
+    assertApi('gtmOnSuccess').wasNotCalled();
+
+- name: Tag fails when inject_script permission is denied
+  code: |-
+    const mockData = {
+      apikey: "test-api-key-123"
+    };
+
+    mock('queryPermission', function(permission, url) {
+      return false;
+    });
+
+    mock('fail', function(msg) {
+      assertThat(msg).contains("Missing inject_script permission");
+    });
+
+    runCode(mockData);
 
 
 ___NOTES___
 
 Created on 9/3/2024, 12:36:23 PM
+
